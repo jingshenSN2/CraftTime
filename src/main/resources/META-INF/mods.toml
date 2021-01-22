@@ -1,13 +1,13 @@
 modLoader="javafml" #mandatory
 loaderVersion="[35,)" #mandatory This is typically bumped every Minecraft version by Forge. See our download page for lists of versions.
 license="MIT"
-issueTrackerURL="https://www.google.com" #optional
+issueTrackerURL="https://github.com/jingshenSN2/CraftTime" #optional
 [[mods]] #mandatory
 modId="timecraft" #mandatory
 version="${file.jarVersion}" #mandatory
 displayName="Craft Time" #mandatory
 updateJSONURL="https://www.google.com" #optional
-displayURL="https://www.google.com" #optional
+displayURL=""https://www.curseforge.com/minecraft/mc-mods/craft-time" #optional
 logoFile="icon.png" #optional
 credits="" #optional
 authors="SN2" #optional
