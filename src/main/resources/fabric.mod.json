@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "id": "timecraft",
+  "version": "${version}",
+
+  "name": "TimeCraft",
+  "description": "Need more time to craft!",
+  "authors": [
+    "SN2"
+  ],
+  "contact": {
+    "homepage": "-",
+    "sources": "-"
+  },
+
+  "license": "CC0-1.0",
+  "icon": "assets/timecraft/icon.png",
+
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "sn2.timecraft.TimeCraft"
+    ]
+  },
+  "mixins": [
+    "timecraft.mixins.json"
+  ],
+
+  "depends": {
+    "fabricloader": ">=0.7.4",
+    "fabric": "*",
+    "minecraft": "1.16.x"
+  },
+  "suggests": {
+    "another-mod": "*"
+  }
+}
