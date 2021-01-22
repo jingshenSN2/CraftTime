@@ -3,17 +3,17 @@
   "id": "timecraft",
   "version": "${version}",
 
-  "name": "TimeCraft",
+  "name": "Craft Time",
   "description": "Need more time to craft!",
   "authors": [
     "SN2"
   ],
   "contact": {
-    "homepage": "-",
-    "sources": "-"
+    "homepage": "https://www.curseforge.com/minecraft/mc-mods/craft-time",
+    "sources": "https://github.com/jingshenSN2/CraftTime"
   },
 
-  "license": "CC0-1.0",
+  "license": "MIT",
   "icon": "assets/timecraft/icon.png",
 
   "environment": "*",
