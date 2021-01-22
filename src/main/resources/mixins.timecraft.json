@@ -1,0 +1,15 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "sn2.timecraft.mixin",
+  "compatibilityLevel": "JAVA_8",
+  "mixins": [
+  ],
+  "client": [
+	"MixinCraftingScreen",
+	"MixinInventoryScreen"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
