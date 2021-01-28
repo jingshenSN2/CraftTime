@@ -18,8 +18,11 @@
 
   "environment": "*",
   "entrypoints": {
-    "main": [
+    "client": [
       "sn2.timecraft.TimeCraft"
+    ],
+    "server": [
+      "sn2.timecraft.TimeCraftServer"
     ]
   },
   "mixins": [

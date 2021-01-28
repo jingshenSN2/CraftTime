@@ -9,8 +9,8 @@ import net.minecraft.screen.PlayerScreenHandler;
 import net.minecraft.screen.slot.Slot;
 import sn2.timecraft.TimeCraft;
 
-public class CraftingDifficulty {
-		
+public class CraftingDifficultyHelper {
+
 	public static int getCraftingDifficultyFromMatrix(PlayerScreenHandler handler) {
 		ArrayList<Slot> slots = new ArrayList<Slot>();
 		for (int i = 1; i < 5; i++) {
@@ -28,7 +28,7 @@ public class CraftingDifficulty {
 		int difficulty = getCraftingDifficultyFromMatrix(slots);
 		return difficulty;
 	}
-	
+
 	public static int getCraftingDifficultyFromMatrix(ArrayList<Slot> slots) {
 		int basic_difficulty = 20;
 		int item_difficulty = 0;
@@ -36,10 +36,10 @@ public class CraftingDifficulty {
 			Item item = s.getStack().getItem();
 			if (item == Items.AIR)
 				continue;
-			item_difficulty += TimeCraft.craftingDifficultyMap.getDifficulty(item);
+			item_difficulty += TimeCraft.map.getDifficulty(item);
 		}
 		int difficulty = basic_difficulty + item_difficulty;
 		return difficulty;
 	}
-	
+
 }

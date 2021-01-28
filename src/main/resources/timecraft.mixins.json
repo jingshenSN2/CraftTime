@@ -4,8 +4,10 @@
   "package": "sn2.timecraft.mixin",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
+	"MixinPlayerManager"
   ],
   "client": [
+	"MixinClientPlayerEntity",
 	"MixinCraftingScreen",
 	"MixinInventoryScreen"
   ],

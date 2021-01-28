@@ -1,14 +1,21 @@
 package sn2.timecraft;
 
-import net.fabricmc.api.ModInitializer;
-import sn2.timecraft.util.CraftingDifficultyParser;
+import net.fabricmc.api.ClientModInitializer;
+import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
+import sn2.timecraft.config.ConfigLoader;
 
-public class TimeCraft implements ModInitializer {
-	
-	public static CraftingDifficultyParser craftingDifficultyMap = new CraftingDifficultyParser("timecraft.properties");
-	
+public class TimeCraft implements ClientModInitializer {
+
+	public static ConfigLoader map = new ConfigLoader();
+
 	@Override
-	public void onInitialize() {
+	public void onInitializeClient() {
+		ClientPlayNetworking.registerGlobalReceiver(Constants.DIFFICULTY_TABLE_PACKET_ID,
+				(client, handler, packetBuf, responseSender) -> {
+					String item = packetBuf.readString();
+					int value = packetBuf.readVarInt();
+					map.setDifficulty(item, value);
+				});
 	}
 
 }
