@@ -38,7 +38,7 @@ public abstract class MixinInventoryScreen extends AbstractInventoryScreen<Playe
 		int j = this.y;
 		if (player.isCrafting() && player.getCraftPeriod() > 0) {
 			int l = (int) (player.getCraftTime() * 17.0F / player.getCraftPeriod());
-			MixinInventoryScreen.drawTexture(matrices, i + 135, j + 29, 0, 0, l + 1, 14, 18, 15);
+			MixinInventoryScreen.drawTexture(matrices, i + 134, j + 29, 0, 0, l + 1, 14, 18, 15);
 		}
 	}
 

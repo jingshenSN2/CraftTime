@@ -38,12 +38,13 @@ public abstract class MixinCraftingScreen extends HandledScreen<CraftingScreenHa
 		int j = (this.height - this.backgroundHeight) / 2;
 		if (player.isCrafting() && player.getCraftPeriod() > 0) {
 			int l = (int) (player.getCraftTime() * 24.0F / player.getCraftPeriod());
-			MixinCraftingScreen.drawTexture(matrices, i + 90, j + 35, 0, 0, l + 1, 16, 24, 17);
+			MixinCraftingScreen.drawTexture(matrices, i + 89, j + 35, 0, 0, l + 1, 16, 24, 17);
 		}
 	}
 
 	@Inject(method = "tick", at = @At("TAIL"), cancellable = true)
 	public void timecraft$tick(CallbackInfo info) {
+		this.player = (ITimeCraftPlayer) this.client.player;
 		ItemStack resultStack = this.handler.getSlot(0).getStack();
 		boolean finished = player.tick(resultStack);
 		if (finished) {
