@@ -9,7 +9,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.Items;
 import sn2.timecraft.TimeCraft;
 
-public class CraftingDifficulty {
+public class CraftingDifficultyHelper {
 		
 	public static int getCraftingDifficultyFromMatrix(PlayerContainer handler) {
 		ArrayList<Slot> slots = new ArrayList<Slot>();
@@ -36,7 +36,7 @@ public class CraftingDifficulty {
 			Item item = s.getStack().getItem();
 			if (item == Items.AIR)
 				continue;
-			item_difficulty += TimeCraft.craftingDifficultyMap.getDifficulty(item);
+			item_difficulty += TimeCraft.map.getDifficulty(item);
 		}
 		int difficulty = basic_difficulty + item_difficulty;
 		return difficulty;

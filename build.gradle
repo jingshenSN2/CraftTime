@@ -16,14 +16,21 @@ apply plugin: 'org.spongepowered.mixin'
 apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
 
-version = '0.1.0'
+version = '0.2.1'
 group = 'sn2.timecraft' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
-archivesBaseName = 'timecraft'
+archivesBaseName = "CraftTime-FORGE-1.16.4"
 
 sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8' // Need this here so eclipse task generates correctly.
 
 repositories {
   maven { url = "https://repo.spongepowered.org/maven" }
+}
+
+configurations {
+    provided {
+        compile.extendsFrom(provided)
+    }
+
 }
 
 println('Java: ' + System.getProperty('java.version') + ' JVM: ' + System.getProperty('java.vm.version') + '(' + System.getProperty('java.vendor') + ') Arch: ' + System.getProperty('os.arch'))
@@ -115,7 +122,7 @@ dependencies {
     // Real examples
     // compile 'com.mod-buildcraft:buildcraft:6.0.8:dev'  // adds buildcraft to the dev env
     // compile 'com.googlecode.efficient-java-matrix-library:ejml:0.24' // adds ejml to the dev env
-
+	compile 'org.spongepowered:mixin:0.8.2'
     // The 'provided' configuration is for optional dependencies that exist at compile-time but might not at runtime.
     // provided 'com.mod-buildcraft:buildcraft:6.0.8:dev'
 
@@ -130,12 +137,15 @@ dependencies {
 
 // Example for how to get properties into the manifest for reading by the runtime..
 jar {
+    from(configurations.provided.collect {
+        it.isDirectory() ? it : zipTree(it)
+    }) {
+        exclude "LICENSE.txt", "META-INF/MANIFSET.MF", "META-INF/maven/**", "META-INF/*.RSA", "META-INF/*.SF"
+    }
     manifest {
         attributes([
-            "Specification-Title": "timecraft",
-            "Specification-Vendor": "timecraftsareus",
-            "Specification-Version": "1", // We are version 1 of ourselves
-            'TweakClass': 'org.spongepowered.asm.launch.MixinTweaker',,
+            'TweakClass': 'org.spongepowered.asm.launch.MixinTweaker',
+            'TweakOrder': 0,
             'MixinConfigs': 'mixins.timecraft.json',
             "Implementation-Title": project.name,
             "Implementation-Version": "${version}",

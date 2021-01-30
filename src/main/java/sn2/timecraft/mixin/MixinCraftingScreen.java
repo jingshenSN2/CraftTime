@@ -14,14 +14,15 @@ import net.minecraft.inventory.container.ClickType;
 import net.minecraft.inventory.container.Slot;
 import net.minecraft.inventory.container.WorkbenchContainer;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
-import sn2.timecraft.util.CraftingDifficulty;
+import sn2.timecraft.ITimeCraftPlayer;
+import sn2.timecraft.util.CraftingDifficultyHelper;
 
 @Mixin(CraftingScreen.class)
 public abstract class MixinCraftingScreen extends ContainerScreen<WorkbenchContainer>{
-	
+
+	private ITimeCraftPlayer player;
 
 	public MixinCraftingScreen(WorkbenchContainer screenContainer, PlayerInventory inv, ITextComponent titleIn) {
 		super(screenContainer, inv, titleIn);
@@ -29,43 +30,26 @@ public abstract class MixinCraftingScreen extends ContainerScreen<WorkbenchConta
 
 	private static final ResourceLocation CRAFT_OVERLAY_TEXTURE = new ResourceLocation("timecraft:textures/gui/crafting_table.png");
 	
-	public boolean is_crafting = false;
-	public int craft_time = 0;
-	public int craft_period = 0;
-
 	@Inject(method = "drawGuiContainerBackgroundLayer", at = @At("TAIL"), cancellable = true)
 	protected void timecraft$drawGuiContainerBackgroundLayer(MatrixStack matrices, float delta, int mouseX, int mouseY, CallbackInfo info) {
+		this.player = (ITimeCraftPlayer) this.minecraft.player;
 	   this.minecraft.getTextureManager().bindTexture(CRAFT_OVERLAY_TEXTURE);
 	   int i = this.guiLeft;
 	   int j = (this.height - this.ySize) / 2;
-	   if (this.is_crafting && this.craft_period > 0) {
-		   int l = (int) (this.craft_time * 24.0F / this.craft_period);
-		   MixinCraftingScreen.blit(matrices, i + 90, j + 35, 0, 0, l + 1, 16, 24, 17);
+	   if (player.isCrafting() && player.getCraftPeriod() > 0) {
+		   int l = (int) (player.getCraftTime() * 24.0F / player.getCraftPeriod());
+		   MixinCraftingScreen.blit(matrices, i + 89, j + 35, 0, 0, l + 1, 16, 24, 17);
 	   }
 	}
 
 	@Inject(method = "tick", at = @At("TAIL"), cancellable = true)
 	public void timecraft$tick(CallbackInfo info) {
-		if (this.is_crafting) {
-			ItemStack cursorStack = this.minecraft.player.inventory.getCurrentItem();
-			ItemStack resultStack = this.container.getSlot(0).getStack();
-			if (cursorStack.getItem() != Items.AIR) {
-				if (!cursorStack.isItemEqual(resultStack) || 
-						cursorStack.getCount() + resultStack.getCount() > cursorStack.getMaxStackSize()) {					
-					this.is_crafting = false;
-				}
-			}
-			if (resultStack.getItem() == Items.AIR) {
-				this.is_crafting = false;
-			}
-			if (this.craft_time < this.craft_period) {
-				this.craft_time++;
-			}
-			if (this.craft_time >= this.craft_period) {
-				super.handleMouseClick(this.container.getSlot(0), 0, 0, ClickType.PICKUP);
-				this.craft_time = 0;
-				this.craft_period = CraftingDifficulty.getCraftingDifficultyFromMatrix(this.container);
-			}
+		this.player = (ITimeCraftPlayer) this.minecraft.player;
+		ItemStack resultStack = this.container.getSlot(0).getStack();
+		boolean finished = player.tick(resultStack);
+		if (finished) {
+			super.handleMouseClick(this.container.getSlot(0), 0, 0, ClickType.PICKUP);
+			player.setCraftPeriod(CraftingDifficultyHelper.getCraftingDifficultyFromMatrix(this.container));
 		}
 	}
 	
@@ -75,13 +59,13 @@ public abstract class MixinCraftingScreen extends ContainerScreen<WorkbenchConta
 	         invSlot = slot.slotNumber;
 	    }
 		if (invSlot > 0 && invSlot < 10) {
-			this.craft_time = 0;
-			this.is_crafting = false;
+			player.setCraftTime(0);
+			player.setCrafting(false);
 		}
 		if (invSlot == 0) {
-			if (!is_crafting) {
-				this.craft_period = CraftingDifficulty.getCraftingDifficultyFromMatrix(this.container);
-				this.is_crafting = true;
+			if (!player.isCrafting()) {
+				player.setCraftPeriod(CraftingDifficultyHelper.getCraftingDifficultyFromMatrix(this.container));
+				player.setCrafting(true);
 			}
 			info.cancel();
 		}
