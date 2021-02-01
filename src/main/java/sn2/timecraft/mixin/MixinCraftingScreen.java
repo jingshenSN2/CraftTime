@@ -49,7 +49,7 @@ public abstract class MixinCraftingScreen extends HandledScreen<CraftingScreenHa
 		boolean finished = player.tick(resultStack);
 		if (finished) {
 			super.onMouseClick(this.handler.getSlot(0), 0, 0, SlotActionType.PICKUP);
-			player.setCraftPeriod(CraftingDifficultyHelper.getCraftingDifficultyFromMatrix(this.handler));
+			player.setCraftPeriod(CraftingDifficultyHelper.getCraftingDifficultyFromMatrix(this.handler, true));
 		}
 	}
 
@@ -65,7 +65,7 @@ public abstract class MixinCraftingScreen extends HandledScreen<CraftingScreenHa
 		}
 		if (invSlot == 0) {
 			if (!player.isCrafting()) {
-				player.setCraftPeriod(CraftingDifficultyHelper.getCraftingDifficultyFromMatrix(this.handler));
+				player.setCraftPeriod(CraftingDifficultyHelper.getCraftingDifficultyFromMatrix(this.handler, true));
 				player.setCrafting(true);
 			}
 			info.cancel();

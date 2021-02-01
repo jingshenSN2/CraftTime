@@ -44,11 +44,12 @@ public abstract class MixinInventoryScreen extends AbstractInventoryScreen<Playe
 
 	@Inject(method = "tick", at = @At("TAIL"), cancellable = true)
 	public void timecraft$tick(CallbackInfo info) {
+		this.player = (ITimeCraftPlayer) this.client.player;
 		ItemStack resultStack = this.handler.getSlot(0).getStack();
 		boolean finished = player.tick(resultStack);
 		if (finished) {
 			super.onMouseClick(this.handler.getSlot(0), 0, 0, SlotActionType.PICKUP);
-			player.setCraftPeriod(CraftingDifficultyHelper.getCraftingDifficultyFromMatrix(this.handler));
+			player.setCraftPeriod(CraftingDifficultyHelper.getCraftingDifficultyFromMatrix(this.handler, false));
 		}
 	}
 
@@ -64,7 +65,7 @@ public abstract class MixinInventoryScreen extends AbstractInventoryScreen<Playe
 		}
 		if (invSlot == 0) {
 			if (!player.isCrafting()) {
-				player.setCraftPeriod(CraftingDifficultyHelper.getCraftingDifficultyFromMatrix(this.handler));
+				player.setCraftPeriod(CraftingDifficultyHelper.getCraftingDifficultyFromMatrix(this.handler, false));
 				player.setCrafting(true);
 			}
 			info.cancel();

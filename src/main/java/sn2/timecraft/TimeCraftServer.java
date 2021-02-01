@@ -4,15 +4,16 @@ import java.io.File;
 import java.io.FileInputStream;
 
 import net.fabricmc.api.DedicatedServerModInitializer;
+import net.fabricmc.api.ModInitializer;
 import net.fabricmc.loader.api.FabricLoader;
 import sn2.timecraft.config.ConfigLoader;
 
-public class TimeCraftServer implements DedicatedServerModInitializer {
+public class TimeCraftServer implements ModInitializer {
 
 	public static ConfigLoader CRAFT_DIFFICULTY = new ConfigLoader();
 
 	@Override
-	public void onInitializeServer() {
+	public void onInitialize() {
 		ConfigLoader.genSampleConfig();
 		try {
 			File cfgFile = FabricLoader.getInstance().getConfigDir().resolve(Constants.CONFIG_FILENAME).toFile();

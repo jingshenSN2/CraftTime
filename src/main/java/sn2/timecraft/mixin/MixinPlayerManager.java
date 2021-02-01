@@ -20,7 +20,7 @@ public class MixinPlayerManager {
 	private void onPlayerJoin(ClientConnection connection, ServerPlayerEntity player, CallbackInfo info) {
 		TimeCraftServer.CRAFT_DIFFICULTY.difficultyMap.forEach((k, v) -> {
 			PacketByteBuf buf = PacketByteBufs.create();
-			buf.writeString(k);
+			buf.writeVarInt(k);
 			buf.writeVarInt(v);
 			ServerPlayNetworking.send(player, Constants.DIFFICULTY_TABLE_PACKET_ID, buf);
 		});

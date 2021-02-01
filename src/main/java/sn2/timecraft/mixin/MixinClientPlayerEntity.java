@@ -60,10 +60,12 @@ public class MixinClientPlayerEntity extends AbstractClientPlayerEntity implemen
 				if (!cursorStack.isItemEqual(resultStack)
 						|| cursorStack.getCount() + resultStack.getCount() > cursorStack.getMaxCount()) {
 					this.setCrafting(false);
+					this.craft_time = 0;
 				}
 			}
 			if (resultStack.getItem() == Items.AIR) {
 				this.setCrafting(false);
+				this.craft_time = 0;
 			}
 			if (this.getCraftTime() < this.getCraftPeriod()) {
 				this.craft_time++;

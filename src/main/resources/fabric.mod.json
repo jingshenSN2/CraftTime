@@ -21,7 +21,7 @@
     "client": [
       "sn2.timecraft.TimeCraft"
     ],
-    "server": [
+    "main": [
       "sn2.timecraft.TimeCraftServer"
     ]
   },

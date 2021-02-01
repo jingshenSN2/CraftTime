@@ -10,12 +10,13 @@ import com.google.gson.JsonParser;
 
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.item.Item;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 import sn2.timecraft.Constants;
 
 public class ConfigLoader {
 
-	public HashMap<String, Integer> difficultyMap = new HashMap<>();
+	public HashMap<Integer, Integer> difficultyMap = new HashMap<>();
 	private static Path cfgPath = FabricLoader.getInstance().getConfigDir();
 
 	public ConfigLoader() {
@@ -59,21 +60,22 @@ public class ConfigLoader {
 			JsonObject paths = (JsonObject) e.getValue();
 			paths.entrySet().forEach(p -> {
 				String item = namespace + p.getKey();
+				int id = Item.getRawId(Registry.ITEM.get(new Identifier(item)));
 				int value = p.getValue().getAsInt();
-				this.setDifficulty(item, value);
+				this.setDifficulty(id, value);
 			});
 		});
 	}
 
 	public int getDifficulty(Item item) {
-		String rkey = Registry.ITEM.getId(item).toString();
+		int rkey = Item.getRawId(item);
 		if (difficultyMap.containsKey(rkey)) {
 			return difficultyMap.get(rkey);
 		}
 		return 20;
 	}
 
-	public void setDifficulty(String registryString, int difficulty) {
-		this.difficultyMap.put(registryString, difficulty);
+	public void setDifficulty(int id, int difficulty) {
+		this.difficultyMap.put(id, difficulty);
 	}
 }
