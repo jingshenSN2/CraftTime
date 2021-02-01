@@ -21,10 +21,10 @@ import sn2.timecraft.networking.TimeCraftPacketHandler;
 public class Events {
 
 	@SubscribeEvent
-    public static void onWorldLoad(Load event) {
+	public static void onWorldLoad(Load event) {
 		if (!event.getWorld().isRemote()) {
 			ConfigLoader.genSampleConfig();
-	        try {
+			try {
 				File cfgFile = FMLPaths.GAMEDIR.get().resolve("config").resolve(Constants.CONFIG_FILENAME).toFile();
 				FileInputStream inputFile = new FileInputStream(cfgFile);
 				byte[] buf = new byte[inputFile.available()];
@@ -37,15 +37,16 @@ public class Events {
 				e.printStackTrace();
 			}
 		}
-    }
-	
+	}
+
 	@SubscribeEvent
 	public static void onPlayerLogin(PlayerLoggedInEvent event) {
 		PlayerEntity player = event.getPlayer();
 		TimeCraft.map.difficultyMap.forEach((item, difficulty) -> {
 			PacketCraftingDifficulty packet = new PacketCraftingDifficulty(item, difficulty);
-			TimeCraftPacketHandler.INSTANCE.send(PacketDistributor.PLAYER.with(()->(ServerPlayerEntity)player), packet);
+			TimeCraftPacketHandler.INSTANCE.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) player),
+					packet);
 		});
 	}
-	
+
 }

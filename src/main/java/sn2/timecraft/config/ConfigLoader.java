@@ -9,13 +9,14 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
 import net.minecraft.item.Item;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.loading.FMLPaths;
 import net.minecraftforge.registries.ForgeRegistries;
 import sn2.timecraft.Constants;
 
 public class ConfigLoader {
 
-	public HashMap<String, Integer> difficultyMap = new HashMap<>();
+	public HashMap<Integer, Integer> difficultyMap = new HashMap<>();
 	private static Path cfgPath = FMLPaths.GAMEDIR.get().resolve("config");
 
 	public ConfigLoader() {
@@ -59,21 +60,22 @@ public class ConfigLoader {
 			JsonObject paths = (JsonObject) e.getValue();
 			paths.entrySet().forEach(p -> {
 				String item = namespace + p.getKey();
+				int id = Item.getIdFromItem(ForgeRegistries.ITEMS.getValue(new ResourceLocation(item)));
 				int value = p.getValue().getAsInt();
-				this.setDifficulty(item, value);
+				this.setDifficulty(id, value);
 			});
 		});
 	}
 
 	public int getDifficulty(Item item) {
-		String rkey = ForgeRegistries.ITEMS.getKey(item).toString();
+		int rkey = Item.getIdFromItem(item);
 		if (difficultyMap.containsKey(rkey)) {
 			return difficultyMap.get(rkey);
 		}
 		return 20;
 	}
 
-	public void setDifficulty(String registryString, int difficulty) {
-		this.difficultyMap.put(registryString, difficulty);
+	public void setDifficulty(int item, int difficulty) {
+		this.difficultyMap.put(item, difficulty);
 	}
 }
