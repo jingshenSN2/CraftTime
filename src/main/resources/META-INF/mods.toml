@@ -4,9 +4,9 @@ license="MIT"
 issueTrackerURL="https://github.com/jingshenSN2/CraftTime/issues" #optional
 [[mods]] #mandatory
 modId="timecraft" #mandatory
-version="${file.jarVersion}" #mandatory
+version="0.3.1" #mandatory
 displayName="Craft Time" #mandatory
-updateJSONURL="https://" #optional
+updateJSONURL="https://raw.githubusercontent.com/jingshenSN2/CraftTime/1.16-forge/update.json" #optional
 displayURL="https://www.curseforge.com/minecraft/mc-mods/craft-time" #optional
 logoFile="icon.png" #optional
 credits="" #optional
