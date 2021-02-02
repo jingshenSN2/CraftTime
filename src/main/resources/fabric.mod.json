@@ -10,7 +10,8 @@
   ],
   "contact": {
     "homepage": "https://www.curseforge.com/minecraft/mc-mods/craft-time",
-    "sources": "https://github.com/jingshenSN2/CraftTime"
+    "sources": "https://github.com/jingshenSN2/CraftTime",
+	"issues": "https://github.com/jingshenSN2/CraftTime/issues"
   },
 
   "license": "MIT",
