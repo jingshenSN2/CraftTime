@@ -51,7 +51,19 @@ public class MixinClientPlayerEntity extends AbstractClientPlayerEntity implemen
 	public int getCraftPeriod() {
 		return this.craft_period;
 	}
+	
+	@Override
+	public void stopCraft() {
+		this.is_crafting = false;
+		this.craft_time = 0;
+	}
 
+	@Override
+	public void startCraftWithNewPeriod(int craft_period) {
+		this.craft_period = craft_period;
+		this.is_crafting = true;
+	}
+	
 	@Override
 	public boolean tick(ItemStack resultStack) {
 		if (this.isCrafting()) {
@@ -59,13 +71,8 @@ public class MixinClientPlayerEntity extends AbstractClientPlayerEntity implemen
 			if (cursorStack.getItem() != Items.AIR) {
 				if (!cursorStack.isItemEqual(resultStack)
 						|| cursorStack.getCount() + resultStack.getCount() > cursorStack.getMaxStackSize()) {
-					this.setCrafting(false);
-					this.craft_time = 0;
+					this.stopCraft();
 				}
-			}
-			if (resultStack.getItem() == Items.AIR) {
-				this.setCrafting(false);
-				this.craft_time = 0;
 			}
 			if (this.getCraftTime() < this.getCraftPeriod()) {
 				this.craft_time++;

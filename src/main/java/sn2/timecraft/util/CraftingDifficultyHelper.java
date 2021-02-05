@@ -32,5 +32,14 @@ public class CraftingDifficultyHelper {
 		int difficulty = basic_difficulty + item_difficulty;
 		return difficulty;
 	}
+	
+	public static ArrayList<Item> getItemFromMatrix(Container container, boolean is_craft_table) {
+		ArrayList<Item> items = new ArrayList<Item>();
+		int index = is_craft_table ? 10 : 5;
+		for (int i = 1; i < index; i++) {
+			items.add(container.getSlot(i).getStack().getItem());
+		}
+		return items;
+	}
 
 }

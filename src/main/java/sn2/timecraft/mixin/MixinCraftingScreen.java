@@ -1,5 +1,7 @@
 package sn2.timecraft.mixin;
 
+import java.util.ArrayList;
+
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -13,6 +15,7 @@ import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.ClickType;
 import net.minecraft.inventory.container.Slot;
 import net.minecraft.inventory.container.WorkbenchContainer;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
@@ -50,8 +53,13 @@ public abstract class MixinCraftingScreen extends ContainerScreen<WorkbenchConta
 		ItemStack resultStack = this.container.getSlot(0).getStack();
 		boolean finished = player.tick(resultStack);
 		if (finished) {
+			ArrayList<Item> old_recipe = CraftingDifficultyHelper.getItemFromMatrix(this.container, true);
 			super.handleMouseClick(this.container.getSlot(0), 0, 0, ClickType.PICKUP);
-			player.setCraftPeriod(CraftingDifficultyHelper.getCraftingDifficultyFromMatrix(this.container, true));
+			ArrayList<Item> new_recipe = CraftingDifficultyHelper.getItemFromMatrix(this.container, true);
+			if (old_recipe.equals(new_recipe))
+				player.setCraftPeriod(CraftingDifficultyHelper.getCraftingDifficultyFromMatrix(this.container, true));
+			else 
+				player.stopCraft();
 		}
 	}
 
@@ -62,13 +70,11 @@ public abstract class MixinCraftingScreen extends ContainerScreen<WorkbenchConta
 			invSlot = slot.slotNumber;
 		}
 		if (invSlot > 0 && invSlot < 10) {
-			player.setCraftTime(0);
-			player.setCrafting(false);
+			player.stopCraft();
 		}
 		if (invSlot == 0) {
 			if (!player.isCrafting()) {
-				player.setCraftPeriod(CraftingDifficultyHelper.getCraftingDifficultyFromMatrix(this.container, true));
-				player.setCrafting(true);
+				player.startCraftWithNewPeriod(CraftingDifficultyHelper.getCraftingDifficultyFromMatrix(this.container, true));
 			}
 			info.cancel();
 		}
