@@ -3,7 +3,6 @@ package sn2.timecraft;
 import java.io.File;
 import java.io.FileInputStream;
 
-import net.fabricmc.api.DedicatedServerModInitializer;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.loader.api.FabricLoader;
 import sn2.timecraft.config.ConfigLoader;

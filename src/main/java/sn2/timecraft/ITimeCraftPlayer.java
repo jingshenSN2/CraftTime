@@ -15,6 +15,10 @@ public interface ITimeCraftPlayer {
 	public void setCraftPeriod(int craft_period);
 
 	public int getCraftPeriod();
+	
+	public void stopCraft();
+	
+	public void startCraftWithNewPeriod(int craft_period);
 
 	public boolean tick(ItemStack resultStack);
 

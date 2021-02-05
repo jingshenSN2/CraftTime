@@ -1,5 +1,7 @@
 package sn2.timecraft.mixin;
 
+import java.util.ArrayList;
+
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -9,6 +11,7 @@ import net.minecraft.client.gui.screen.ingame.CraftingScreen;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.screen.CraftingScreenHandler;
 import net.minecraft.screen.slot.Slot;
@@ -48,8 +51,13 @@ public abstract class MixinCraftingScreen extends HandledScreen<CraftingScreenHa
 		ItemStack resultStack = this.handler.getSlot(0).getStack();
 		boolean finished = player.tick(resultStack);
 		if (finished) {
+			ArrayList<Item> old_recipe = CraftingDifficultyHelper.getItemFromMatrix(this.handler, true);
 			super.onMouseClick(this.handler.getSlot(0), 0, 0, SlotActionType.PICKUP);
-			player.setCraftPeriod(CraftingDifficultyHelper.getCraftingDifficultyFromMatrix(this.handler, true));
+			ArrayList<Item> new_recipe = CraftingDifficultyHelper.getItemFromMatrix(this.handler, true);
+			if (old_recipe.equals(new_recipe))
+				player.setCraftPeriod(CraftingDifficultyHelper.getCraftingDifficultyFromMatrix(this.handler, true));
+			else
+				player.stopCraft();
 		}
 	}
 
