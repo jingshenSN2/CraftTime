@@ -79,4 +79,9 @@ public abstract class MixinCraftingScreen extends ContainerScreen<WorkbenchConta
 			info.cancel();
 		}
 	}
+	
+	@Inject(method = "onClose", at = @At("HEAD"), cancellable = true)
+	public void timecraft$onClose(CallbackInfo info) {
+		player.stopCraft();
+	}
 }

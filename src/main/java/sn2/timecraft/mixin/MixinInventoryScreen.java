@@ -79,4 +79,9 @@ public abstract class MixinInventoryScreen extends DisplayEffectsScreen<PlayerCo
 			info.cancel();
 		}
 	}
+	
+	@Inject(method = "onClose", at = @At("HEAD"), cancellable = true)
+	public void timecraft$onClose(CallbackInfo info) {
+		player.stopCraft();
+	}
 }
