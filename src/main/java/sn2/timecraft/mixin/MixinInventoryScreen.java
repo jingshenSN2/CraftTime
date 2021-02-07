@@ -77,4 +77,9 @@ public abstract class MixinInventoryScreen extends AbstractInventoryScreen<Playe
 			info.cancel();
 		}
 	}
+	
+	@Inject(method = "removed", at = @At("HEAD"), cancellable = true)
+	public void timecraft$onClose(CallbackInfo info) {
+		player.stopCraft();
+	}
 }

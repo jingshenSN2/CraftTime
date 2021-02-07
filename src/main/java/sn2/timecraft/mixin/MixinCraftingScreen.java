@@ -79,4 +79,9 @@ public abstract class MixinCraftingScreen extends HandledScreen<CraftingScreenHa
 			info.cancel();
 		}
 	}
+	
+	@Inject(method = "removed", at = @At("HEAD"), cancellable = true)
+	public void timecraft$onClose(CallbackInfo info) {
+		player.stopCraft();
+	}
 }
