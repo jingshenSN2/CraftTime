@@ -13,7 +13,7 @@ public class TimeCraft implements ClientModInitializer {
 		ClientPlayNetworking.registerGlobalReceiver(Constants.DIFFICULTY_TABLE_PACKET_ID,
 				(client, handler, packetBuf, responseSender) -> {
 					int item = packetBuf.readVarInt();
-					int value = packetBuf.readVarInt();
+					float value = packetBuf.readFloat();
 					map.setDifficulty(item, value);
 				});
 	}

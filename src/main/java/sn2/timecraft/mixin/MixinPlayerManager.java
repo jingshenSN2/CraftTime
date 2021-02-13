@@ -21,7 +21,7 @@ public class MixinPlayerManager {
 		TimeCraftServer.CRAFT_DIFFICULTY.difficultyMap.forEach((k, v) -> {
 			PacketByteBuf buf = PacketByteBufs.create();
 			buf.writeVarInt(k);
-			buf.writeVarInt(v);
+			buf.writeFloat(v);
 			ServerPlayNetworking.send(player, Constants.DIFFICULTY_TABLE_PACKET_ID, buf);
 		});
 	}

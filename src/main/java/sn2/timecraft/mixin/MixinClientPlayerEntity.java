@@ -19,8 +19,8 @@ public class MixinClientPlayerEntity extends AbstractClientPlayerEntity implemen
 	}
 
 	public boolean is_crafting = false;
-	public int craft_time = 0;
-	public int craft_period = 0;
+	public float craft_time = 0;
+	public float craft_period = 0;
 
 	@Override
 	public void setCrafting(boolean is_crafting) {
@@ -33,33 +33,33 @@ public class MixinClientPlayerEntity extends AbstractClientPlayerEntity implemen
 	}
 
 	@Override
-	public void setCraftTime(int craft_time) {
+	public void setCraftTime(float craft_time) {
 		this.craft_time = craft_time;
 	}
 
 	@Override
-	public int getCraftTime() {
+	public float getCraftTime() {
 		return this.craft_time;
 	}
 
 	@Override
-	public void setCraftPeriod(int craft_period) {
+	public void setCraftPeriod(float craft_period) {
 		this.craft_period = craft_period;
 	}
 
 	@Override
-	public int getCraftPeriod() {
+	public float getCraftPeriod() {
 		return this.craft_period;
 	}
 	
 	@Override
 	public void stopCraft() {
 		this.is_crafting = false;
-		this.craft_time = 0;
+		this.craft_time = 0F;
 	}
 
 	@Override
-	public void startCraftWithNewPeriod(int craft_period) {
+	public void startCraftWithNewPeriod(float craft_period) {
 		this.craft_period = craft_period;
 		this.is_crafting = true;
 	}
@@ -72,14 +72,14 @@ public class MixinClientPlayerEntity extends AbstractClientPlayerEntity implemen
 				if (!cursorStack.isItemEqual(resultStack)
 						|| cursorStack.getCount() + resultStack.getCount() > cursorStack.getMaxCount()) {
 					this.setCrafting(false);
-					this.craft_time = 0;
+					this.craft_time = 0F;
 				}
 			}
 			if (this.getCraftTime() < this.getCraftPeriod()) {
-				this.craft_time++;
+				this.craft_time += 1F + 0.02F * Math.min(this.experienceLevel, 200);
 			}
 			if (this.getCraftTime() >= this.getCraftPeriod()) {
-				this.craft_time = 0;
+				this.craft_time = 0F;
 				return true;
 			}
 		}
