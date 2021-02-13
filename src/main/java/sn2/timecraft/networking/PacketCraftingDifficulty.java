@@ -9,21 +9,21 @@ import sn2.timecraft.TimeCraft;
 public class PacketCraftingDifficulty {
 
 	private int item;
-	private int difficulty;
+	private float difficulty;
 
-	public PacketCraftingDifficulty(int item, int difficulty) {
+	public PacketCraftingDifficulty(int item, float difficulty) {
 		this.item = item;
 		this.difficulty = difficulty;
 	}
 
 	public PacketCraftingDifficulty(PacketBuffer buffer) {
 		this.item = buffer.readVarInt();
-		this.difficulty = buffer.readVarInt();
+		this.difficulty = buffer.readFloat();
 	}
 
 	public void toBytes(PacketBuffer buf) {
 		buf.writeVarInt(this.item);
-		buf.writeVarInt(this.difficulty);
+		buf.writeFloat(this.difficulty);
 	}
 
 	public void handler(Supplier<Context> ctx) {

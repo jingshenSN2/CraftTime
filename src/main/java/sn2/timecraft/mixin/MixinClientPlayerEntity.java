@@ -75,7 +75,7 @@ public class MixinClientPlayerEntity extends AbstractClientPlayerEntity implemen
 				}
 			}
 			if (this.getCraftTime() < this.getCraftPeriod()) {
-				this.craft_time += 1F + Math.min(this.experienceLevel, 200) * 0.02F;
+				this.craft_time += 1F + 0.02F * Math.min(this.experienceLevel, 200);
 			}
 			if (this.getCraftTime() >= this.getCraftPeriod()) {
 				this.craft_time = 0;
