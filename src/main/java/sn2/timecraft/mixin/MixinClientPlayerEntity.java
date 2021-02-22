@@ -65,6 +65,7 @@ public class MixinClientPlayerEntity extends AbstractClientPlayerEntity implemen
 
 	@Override
 	public void startCraftWithNewPeriod(float craft_period) {
+		this.craft_time = 0;
 		this.craft_period = craft_period;
 		this.is_crafting = true;
 		Minecraft.getInstance().getSoundHandler().play(new CraftingTickableSound(this, this.getPosition()));
@@ -83,9 +84,9 @@ public class MixinClientPlayerEntity extends AbstractClientPlayerEntity implemen
 			if (this.getCraftTime() < this.getCraftPeriod()) {
 				this.craft_time += CraftingSpeedHelper.getCraftingSpeed(this);
 			}
-			if (this.getCraftTime() >= this.getCraftPeriod()) {
-				this.playSound(SoundEventRegistry.finishSound.get(), SoundCategory.PLAYERS, 0.5F, 1f);
-				this.craft_time = 0;
+			else if (this.getCraftTime() >= this.getCraftPeriod()) {
+				this.playSound(SoundEventRegistry.finishSound.get(), SoundCategory.PLAYERS, 0.1F, 1f);
+				this.startCraftWithNewPeriod(craft_period);
 				return true;
 			}
 		}

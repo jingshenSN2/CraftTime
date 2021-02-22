@@ -28,7 +28,7 @@ public class CraftingTickableSound extends TickableSound {
 	   }
 
 	   public void tick() {
-		   if (!this.player.isCrafting()) {
+		   if (this.player.getCraftTime() >= this.player.getCraftPeriod()) {
 			   this.finishPlaying();
 		   }
 	   }
