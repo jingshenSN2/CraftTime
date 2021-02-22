@@ -73,8 +73,7 @@ public abstract class MixinCraftingScreen extends HandledScreen<CraftingScreenHa
 		}
 		if (invSlot == 0) {
 			if (!player.isCrafting()) {
-				player.setCraftPeriod(CraftingDifficultyHelper.getCraftingDifficultyFromMatrix(this.handler, true));
-				player.setCrafting(true);
+				player.startCraftWithNewPeriod(CraftingDifficultyHelper.getCraftingDifficultyFromMatrix(this.handler, true));
 			}
 			info.cancel();
 		}
