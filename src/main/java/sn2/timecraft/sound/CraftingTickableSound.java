@@ -19,14 +19,17 @@ public class CraftingTickableSound extends MovingSoundInstance {
 	      this.z = (double)((float)pos.getZ());
 	   }
 
+	   @Override
 	   public boolean canPlay() {
 	      return this.player.isCrafting();
 	   }
 
+	   @Override
 	   public boolean shouldAlwaysPlay() {
 	      return true;
 	   }
 
+	   @Override
 	   public void tick() {
 		   if (this.player.getCraftTime() >= this.player.getCraftPeriod()) {
 			  this.setDone();

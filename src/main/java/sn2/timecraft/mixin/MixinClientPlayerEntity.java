@@ -68,7 +68,9 @@ public class MixinClientPlayerEntity extends AbstractClientPlayerEntity implemen
 		this.craft_time = 0;
 		this.craft_period = craft_period;
 		this.is_crafting = true;
-		MinecraftClient.getInstance().getSoundManager().play(new CraftingTickableSound(this, this.getBlockPos()));
+		if (craft_period >= 20F) {
+			MinecraftClient.getInstance().getSoundManager().play(new CraftingTickableSound(this, this.getBlockPos()));
+		}
 	}
 	
 	@Override
@@ -78,8 +80,7 @@ public class MixinClientPlayerEntity extends AbstractClientPlayerEntity implemen
 			if (cursorStack.getItem() != Items.AIR) {
 				if (!cursorStack.isItemEqual(resultStack)
 						|| cursorStack.getCount() + resultStack.getCount() > cursorStack.getMaxCount()) {
-					this.setCrafting(false);
-					this.craft_time = 0F;
+					return false;
 				}
 			}
 			if (this.getCraftTime() < this.getCraftPeriod()) {
