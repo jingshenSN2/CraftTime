@@ -19,14 +19,17 @@ public class CraftingTickableSound extends TickableSound {
 	      this.z = (double)((float)pos.getZ());
 	   }
 
+	   @Override
 	   public boolean shouldPlaySound() {
 	      return this.player.isCrafting();
 	   }
-
+	   
+	   @Override
 	   public boolean canBeSilent() {
 	      return true;
 	   }
-
+	   
+	   @Override
 	   public void tick() {
 		   if (this.player.getCraftTime() >= this.player.getCraftPeriod()) {
 			   this.finishPlaying();
