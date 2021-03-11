@@ -68,7 +68,7 @@ public class MixinClientPlayerEntity extends AbstractClientPlayerEntity implemen
 		this.craft_time = 0;
 		this.craft_period = craft_period;
 		this.is_crafting = true;
-		if (craft_period >= 20F) {
+		if (craft_period >= 10F) {
 			MinecraftClient.getInstance().getSoundManager().play(new CraftingTickableSound(this, this.getBlockPos()));
 		}
 	}
